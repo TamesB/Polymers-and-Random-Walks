@@ -191,10 +191,10 @@ if runVraag1c:
         gyration_radius_list.append(gyration_radius)
 
     # analytical sqrt(N)
-    analytical_N = [math.sqrt(N) for N in N_list]
+    analytical_N = [0.4*math.sqrt(N) for N in N_list]
 
     plt.plot(N_list, gyration_radius_list, 'o-', label="Simulation")
-    plt.plot(N_list, analytical_N, 'r--', label="y=sqrt(N)")
+    plt.plot(N_list, analytical_N, 'r--', label="y=0.4*sqrt(N)")
     plt.xlabel("Chain length N")
     plt.ylabel("Gyration radius")
     plt.title("Gyration radius vs chain length")
