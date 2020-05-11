@@ -42,6 +42,7 @@ class chain:
                 plt.ylabel('y-as')
                 plt.xlabel('x-as')
                 plt.grid(b=True, axis='both')
+                plt.title("Markov Chain generation")
                 plt.draw()
                 plt.pause(0.001)
                 plt.clf()
@@ -72,6 +73,7 @@ class chain:
         plt.plot(x, y, '-')
         plt.xlabel("x-as")
         plt.ylabel("y-as")
+        plt.title("Markov Chain generation")
         plt.grid(b=True, axis='both')
         plt.show()
 
@@ -88,12 +90,6 @@ class chain:
 ############ Vraag 1a
 if runVraag1a:
     N_tests = [10, 50, 100, 500, 1000, 5000, 10000]
-
-    # run alle N tests
-    for N in N_tests:
-        ketting = chain(N)
-        ketting.generate_random_chain(False)
-        ketting.plot_chain()
 
     # amount of chains to be generated
     runs_per_chain = 1000
@@ -156,20 +152,21 @@ if runVraag1b:
 if runVraag1c:
     N_start = 10
     N_end = 10000
-    steps = 20
+    steps = 30
 
     # how many times to repeat the same N for exacter gyration radius results
-    repeat = 50
+    repeat = 10
 
     ending_gyration_radius_list = []
     N_list = []
     # run alle N tests
     for N in range(N_start, N_end, int((N_end - N_start) / steps)):
         N_list.append(N)
+        
+        gyration_radius_list = []
 
         # repeat same chain for average gyration radius calculation
         for _ in range(repeat):
-            gyration_radius_list = []
 
             ketting = chain(N)
             ketting.generate_random_chain(False)
