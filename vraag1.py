@@ -107,9 +107,9 @@ if runVraag1a:
         average_distances = [np.sqrt(value) for value in avg_distance_list]
 
         plt.plot(N_tests, average_distances, 'o-')
-        plt.legend('Simulatie')
         plt.xlabel("N")
         plt.ylabel("Average End to end distance")
+        plt.title("Polymer random walk, Distance vs Chain length")
         plt.grid(b=True, axis='both')
         plt.show()
 
