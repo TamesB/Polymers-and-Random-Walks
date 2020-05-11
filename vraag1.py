@@ -156,44 +156,54 @@ if runVraag1b:
 if runVraag1c:
     N_start = 10
     N_end = 10000
-    steps = 100
+    steps = 20
 
-    gyration_radius_list = []
+    # how many times to repeat the same N for exacter gyration radius results
+    repeat = 50
+
+    ending_gyration_radius_list = []
     N_list = []
     # run alle N tests
     for N in range(N_start, N_end, int((N_end - N_start) / steps)):
         N_list.append(N)
-        ketting = chain(N)
-        ketting.generate_random_chain(False)
 
-        gyration_sum = 0
+        # repeat same chain for average gyration radius calculation
+        for _ in range(repeat):
+            gyration_radius_list = []
 
-        # bereken de centre of mass
-        x_sum = 0
-        y_sum = 0
-        for point in ketting.current_state:
-            x_sum += point[0]
-            y_sum += point[1]
-        
-        centre_of_mass_x = x_sum / N
-        centre_of_mass_y = y_sum / N
+            ketting = chain(N)
+            ketting.generate_random_chain(False)
 
-        # bereken de som
-        for point in ketting.current_state:
-            dist_x = point[0] - centre_of_mass_x
-            dist_y = point[1] - centre_of_mass_y
+            gyration_sum = 0
 
-            dist_squared = (dist_x**2 + dist_y**2)
-            gyration_sum += dist_squared
+            # bereken de centre of mass
+            x_sum = 0
+            y_sum = 0
+            for point in ketting.current_state:
+                x_sum += point[0]
+                y_sum += point[1]
+            
+            centre_of_mass_x = x_sum / N
+            centre_of_mass_y = y_sum / N
 
-        # bereken de gyration radius squared
-        gyration_radius = math.sqrt((1 / (N - 1)) * gyration_sum)
-        gyration_radius_list.append(gyration_radius)
+            # bereken de som
+            for point in ketting.current_state:
+                dist_x = point[0] - centre_of_mass_x
+                dist_y = point[1] - centre_of_mass_y
+
+                dist_squared = (dist_x**2 + dist_y**2)
+                gyration_sum += dist_squared
+
+            # bereken de gyration radius squared
+            gyration_radius = math.sqrt((1 / (N - 1)) * gyration_sum)
+            gyration_radius_list.append(gyration_radius)
+
+        ending_gyration_radius_list.append(stat.mean(gyration_radius_list))
 
     # analytical sqrt(N)
     analytical_N = [0.4*math.sqrt(N) for N in N_list]
 
-    plt.plot(N_list, gyration_radius_list, 'o-', label="Simulation")
+    plt.plot(N_list, ending_gyration_radius_list, 'o-', label="Simulation")
     plt.plot(N_list, analytical_N, 'r--', label="y=0.4*sqrt(N)")
     plt.xlabel("Chain length N")
     plt.ylabel("Gyration radius")
