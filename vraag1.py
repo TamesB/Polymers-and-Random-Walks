@@ -5,7 +5,7 @@ import numpy as np
 from scipy.spatial.distance import cdist
 import statistics as stat
 
-runVraag1a = False
+runVraag1a = True
 runVraag1b = False
 runVraag1c = True
 
@@ -59,9 +59,9 @@ class chain:
         # generate repeat amount of chains and calculate end-to-end
         for _ in range(repeat):
             self.current_state = [[0,0]]
-            self.generate_random_chain()
-            self.calculate_end_to_end()
-            distances.append(self.afstand_squared)
+            self.generate_random_chain(False)
+            afstand_squared = self.calculate_end_to_end()
+            distances.append(afstand_squared)
 
         # return the average of all of these distances
         return stat.mean(distances)
